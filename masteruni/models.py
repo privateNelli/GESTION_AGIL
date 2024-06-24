@@ -8,19 +8,18 @@ class Usuario(models.Model):
     def __str__(self):
         return str(self.n_usuario)
     
-class Categoria(models.Model):
-    id_categoria = models.IntegerField(db_column='idCategoria', primary_key=True)
-    nombre = models.CharField(max_length=50)
+# class Categoria(models.Model):
+#     id_categoria = models.IntegerField(db_column='idCategoria', primary_key=True)
+#     nombre = models.CharField(max_length=50)
 
-    def __str__(self):
-        return str(self.nombre)
+#     def __str__(self):
+#         return str(self.nombre)
 
 class Inventario(models.Model):
-    id_prod = models.IntegerField(primary_key=True)
-    nombre_prod = models.CharField(max_length=50)
+    id     = models.CharField(primary_key=True, max_length=5)
+    nombre = models.CharField(max_length=30)
+    categoria = models.CharField(max_length=30, default='categoria')
+    stock  = models.IntegerField()
     fecha_venc = models.DateField()
-    stock = models.IntegerField()
-    id_categoria = models.ForeignKey('Categoria',on_delete=models.CASCADE, db_column='idCategoria', null=True)
+    
 
-    def __str__(self):
-        return str(self.id_prod, self.nombre_prod, self.fecha_venc, self.stock, self.id_categoria)

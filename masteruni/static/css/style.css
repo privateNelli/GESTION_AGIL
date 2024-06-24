@@ -193,7 +193,7 @@ label{
     color:white;
 }
 
-h2{
+th,td, table{
     color: white;
     text-align: center;
 }

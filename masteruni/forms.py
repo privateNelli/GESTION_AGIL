@@ -25,7 +25,9 @@ class UsuarioForm(ModelForm):
         fields="__all__"
 
 
-class InventarioForm(ModelForm):
-    class Meta:
-        model = Inventario
-        fields="__all__"
+class InventarioForm(forms.Form):
+    id = forms.IntegerField()
+    nombre = forms.CharField(max_length=30)
+    categoria = forms.CharField(max_length=30)
+    stock = forms.IntegerField()
+    fecha_venc =  forms.DateField()

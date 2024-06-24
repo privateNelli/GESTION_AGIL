@@ -1,17 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import *
-from .forms import *
-from django.contrib.auth import authenticate, login, logout 
-from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import *
+from .models import *
 
 # Create your views here.
 
 def dash(request):
     if request.method == "GET":
-        inventario=Inventario.objects.raw('SELECT * FROM inventarios_inventario')
+        inventario=Inventario.objects.raw('SELECT * FROM masteruni_inventario')
         context={"inventario":inventario}
         return render(request, 'masteruni/dash.html', context)
 
@@ -35,7 +34,48 @@ def signin(request):
             login(request, user)
             return redirect('index')
         
+def inventario(request):
+    if request.method == "POST":
+        form = InventarioForm
+        context = {'form':form, 'msj':'Error, intente de nuevo...'}
+        Inventario.objects.create(id=request.POST["id"], 
+                               nombre=request.POST["nombre"], 
+                               categoria=request.POST["categoria"], 
+                               stock=request.POST["stock"], 
+                               fecha_venc=request.POST["fecha_venc"])
+        return render(request, 'masteruni/inventario.html', context)
+    else:
+        return render(request, 'masteruni/inventario.html', {'form':InventarioForm})
+        
 
 
 def index(request):
     return render(request, 'masteruni/index.html')
+
+
+def signup(request):
+    if request.method == 'GET':
+        return render(request, 'masteruni/signup.html', {
+            'form': UserCreationForm
+        })
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.create_user(username=request.POST['username'],password=request.POST['password1'])
+                user.save()
+                login(request, user)
+                return redirect('index')
+            except IntegrityError:
+                return render(request, 'masteruni/signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'El usuario ya existe'
+                })
+        return render(request, 'masteruni/signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'Las Contraseñas no coinciden'
+                })
+
+
+def signout(request):
+    logout(request)
+    return redirect('index')
