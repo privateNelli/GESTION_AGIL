@@ -46,6 +46,16 @@ def inventario(request):
         return render(request, 'masteruni/inventario.html', context)
     else:
         return render(request, 'masteruni/inventario.html', {'form':InventarioForm})
+    
+def kit(request):
+    if request.method == "POST":
+        form = KitForm
+        context = {'form':form, 'msj':'Error, Intente de neuvo...'}
+        Kit.objects.create(id_kit=request.POST["id_kit"],
+                           nombre_kit=request.POST["nombre_kit"])
+        return render(request, 'masteruni/kit.html', context)
+    else:
+        return render(request, 'masteruni/kit.html', {'form':KitForm})        
         
 
 
@@ -79,3 +89,4 @@ def signup(request):
 def signout(request):
     logout(request)
     return redirect('index')
+

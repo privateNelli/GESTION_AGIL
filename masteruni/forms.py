@@ -24,6 +24,14 @@ class UsuarioForm(ModelForm):
         model = Usuario
         fields="__all__"
 
+class KitForm(ModelForm):
+    id_kit = forms.IntegerField()
+    nombre_kit = forms.CharField()
+    class Meta:
+        model = Kit
+        fields="__all__"
+
+
 
 class InventarioForm(forms.Form):
     id = forms.IntegerField()
@@ -31,3 +39,4 @@ class InventarioForm(forms.Form):
     categoria = forms.CharField(max_length=30)
     stock = forms.IntegerField()
     fecha_venc =  forms.DateField()
+    id_kit = forms.IntegerField()

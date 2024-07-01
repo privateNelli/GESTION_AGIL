@@ -1,0 +1,14 @@
+{% extends "masteruni/base.html" %}
+
+{% block content %}
+<h1>Kits</h1>
+<form class="form-signup" method="POST">
+    {% csrf_token %}
+    <h2 class="h2-signup">Registrar Kits</h2>
+    {{form.as_p}}
+    <p class="error-mssg">{{error}}</p>
+    <button>
+        Registrar
+    </button>
+</form>
+{% endblock content %}
