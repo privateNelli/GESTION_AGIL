@@ -1,0 +1,33 @@
+{% extends "masteruni/base.html" %}
+
+{% block content %}
+
+<br>
+
+
+
+<table class="table table-striped table-dark">
+    <thead>
+      <tr>
+
+        <th scope="col">Id</th>
+        <th scope="col">Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for kit1 in kit %}
+        <tr>
+      
+          <td>{{kit1.id}}</td>
+          <td>{{kit1.nombre}}</td>
+
+        
+          </tr>
+        
+      {% endfor %}
+    
+          
+    </tbody>
+  </table>
+
+{% endblock content %}
